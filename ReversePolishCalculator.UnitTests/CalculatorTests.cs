@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Xunit;
 using System.Diagnostics.CodeAnalysis;
+using System;
 
 namespace ReversePolishCalculator
 {
@@ -35,6 +36,15 @@ namespace ReversePolishCalculator
             var second = 4;
             var result = calc.Divide(first, second);
             result.Should().Be(3, "Because division...");
+        }
+
+        [Fact]
+        public void Calculator_Divide_Failure()
+        {
+            var calc = new Calculator();
+            var first = 4;
+            var second = 0;
+            Assert.Throws<ArgumentException>(() => calc.Divide(first, second));
         }
 
         [Fact]
