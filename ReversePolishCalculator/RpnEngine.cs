@@ -17,6 +17,12 @@ namespace ReversePolishCalculator
             _calculator = new Calculator();
             _log = new Logger(eLogLevel.Debug);
         }
+        public RpnEngine(Calculator calculator, Logger logger)
+        {
+            _stack = new Stack<decimal>();
+            _calculator = calculator;
+            _log = logger;
+        }
 
         public decimal CalculateRpn(string input)
         {
