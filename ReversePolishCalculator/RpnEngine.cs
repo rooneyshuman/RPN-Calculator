@@ -64,11 +64,5 @@ namespace ReversePolishCalculator
             _log.Debug($"Result of calculation is [{result}]");
             return result;
         }
-
-        private void power()
-        {
-            var stackNumber = _stack.Pop();
-            _stack.Push(_calculator.Power(_stack.Pop(), stackNumber));
-        }
     }
 }
