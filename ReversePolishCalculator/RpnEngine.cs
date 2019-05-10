@@ -18,10 +18,10 @@ namespace ReversePolishCalculator
             _log = new Logger(eLogLevel.Debug);
         }
 
-        public void CalculateRpn()
+        public decimal CalculateRpn(string input)
         {
             _stack.Clear();
-            var input = Console.ReadLine();
+           
             _log.Trace(input);
             var rpnTokens = input.Split(' ');
 
@@ -62,7 +62,13 @@ namespace ReversePolishCalculator
 
             var result = _stack.Pop();
             _log.Debug($"Result of calculation is [{result}]");
-            Console.WriteLine(result);
+            return result;
+        }
+
+        private void power()
+        {
+            var stackNumber = _stack.Pop();
+            _stack.Push(_calculator.Power(_stack.Pop(), stackNumber));
         }
     }
 }
