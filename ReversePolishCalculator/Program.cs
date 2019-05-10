@@ -1,8 +1,10 @@
 ﻿using System;
 using FileLogger;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ReversePolishCalculator
 {
+    [ExcludeFromCodeCoverage]
     class Program
     {
         static void Main(string[] args)
@@ -15,9 +17,8 @@ namespace ReversePolishCalculator
                 {
                     Console.WriteLine("Please enter a valid RPN string to be calculated:");
                     string input = Console.ReadLine();
-                    var result = rpnEngine.CalculateRpn(input);
                     
-                    Console.WriteLine(result);
+                    Console.WriteLine(rpnEngine.CalculateRpn(input));
 
                     Console.WriteLine("Another? (y/n)");
                     var response = Console.ReadLine();
