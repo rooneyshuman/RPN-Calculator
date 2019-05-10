@@ -1,8 +1,10 @@
 ﻿using FluentAssertions;
 using Xunit;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ReversePolishCalculator
 {
+    [ExcludeFromCodeCoverage]
     public class CalculatorTests
     {
         [Fact]
