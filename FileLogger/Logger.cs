@@ -1,16 +1,19 @@
 ﻿using System;
 using System.IO;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FileLogger
 {
     public class Logger
     {
-        private const string _loggingPath = @"C:\Temp\RPNLog.log";
-
+        private string _loggingPath = @"C:\Temp\RPNLog.log";
         private eLogLevel _setLogLevel;
 
         public Logger(eLogLevel logLevel)
         { _setLogLevel = logLevel; }
+
+        public void setPath(string logPath)
+        { _loggingPath = logPath; }
 
         public void Trace(string logString)
         { LogBase(eLogLevel.Trace, logString); }
