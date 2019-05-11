@@ -47,6 +47,14 @@ namespace ReversePolishCalculator
         }
 
         [Fact]
+        public void RpnEngine_Divide_Failure()
+        {
+            var rpnEngine = new RpnEngine();
+            var input = "6 0 /";
+            Assert.Throws<ArgumentException>(() => rpnEngine.CalculateRpn(input));
+        }
+
+        [Fact]
         public void RpnEngine_Power_Success()
         {
             var rpnEngine = new RpnEngine();
@@ -56,7 +64,7 @@ namespace ReversePolishCalculator
         }
 
         [Fact]
-        public void RpnEngine_ExceptionThrown()
+        public void RpnEngine_Exception_Thrown()
         {
             var rpnEngine = new RpnEngine();
             var input = "2 3 ]";
