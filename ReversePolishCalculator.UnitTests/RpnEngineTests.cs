@@ -1,6 +1,5 @@
 ﻿using System;
 using FileLogger;
-using FluentAssertions;
 using Xunit;
 using System.Diagnostics.CodeAnalysis;
 using FakeItEasy;
@@ -11,68 +10,72 @@ namespace ReversePolishCalculator
     public class RpnEngineTests
     {
         [Fact]
-        public void RpnEngine_Add_Success()
+        public void RpnEngine_Call_To_Add()
         {
-            var rpnEngine = new RpnEngine();
-            var input = "2 2 +";
-            var result = rpnEngine.CalculateRpn(input);
-            result.Should().Be(4, "Because addition...");
+            var calc = A.Fake<Calculator>();
+            var log = A.Fake<Logger>();
+            var rpnEngine = new RpnEngine(calc, log);
+            var input = "2 3 +";
+            rpnEngine.CalculateRpn(input);
+            A.CallTo(() => calc.Add(3, 2)).MustHaveHappened();
         }
 
         [Fact]
-        public void RpnEngine_Subtract_Success()
+        public void RpnEngine_Call_To_Subtract()
         {
-            var rpnEngine = new RpnEngine();
-            var input = "4 2 -";
-            var result = rpnEngine.CalculateRpn(input);
-            result.Should().Be(2, "Because subtraction...");
+            var calc = A.Fake<Calculator>();
+            var log = A.Fake<Logger>();
+            var rpnEngine = new RpnEngine(calc, log);
+            var input = "4 3 -";
+            rpnEngine.CalculateRpn(input);
+            A.CallTo(() => calc.Subtract(4, 3)).MustHaveHappened();
         }
 
         [Fact]
-        public void RpnEngine_Multiply_Success()
+        public void RpnEngine_Call_To_Multiply()
         {
-            var rpnEngine = new RpnEngine();
+            var calc = A.Fake<Calculator>();
+            var log = A.Fake<Logger>();
+            var rpnEngine = new RpnEngine(calc, log);
             var input = "2 3 *";
-            var result = rpnEngine.CalculateRpn(input);
-            result.Should().Be(6, "Because multiplication...");
+            rpnEngine.CalculateRpn(input);
+            A.CallTo(() => calc.Multiply(3, 2)).MustHaveHappened();
         }
 
         [Fact]
-        public void RpnEngine_Divide_Success()
+        public void RpnEngine_Call_To_Divide()
         {
-            var rpnEngine = new RpnEngine();
-            var input = "6 2 /";
-            var result = rpnEngine.CalculateRpn(input);
-            result.Should().Be(3, "Because division...");
+            var calc = A.Fake<Calculator>();
+            var log = A.Fake<Logger>();
+            var rpnEngine = new RpnEngine(calc, log);
+            var input = "4 2 /";
+            rpnEngine.CalculateRpn(input);
+            A.CallTo(() => calc.Divide(4, 2)).MustHaveHappened();
         }
 
         [Fact]
-        public void RpnEngine_Divide_Failure()
+        public void RpnEngine_Call_To_Power()
         {
-            var rpnEngine = new RpnEngine();
-            var input = "6 0 /";
-            Assert.Throws<ArgumentException>(() => rpnEngine.CalculateRpn(input));
-        }
-
-        [Fact]
-        public void RpnEngine_Power_Success()
-        {
-            var rpnEngine = new RpnEngine();
+            var calc = A.Fake<Calculator>();
+            var log = A.Fake<Logger>();
+            var rpnEngine = new RpnEngine(calc, log);
             var input = "2 3 ^";
-            var result = rpnEngine.CalculateRpn(input);
-            result.Should().Be(8, "Because power...");
+            rpnEngine.CalculateRpn(input);
+            A.CallTo(() => calc.Power(2, 3)).MustHaveHappened();
         }
 
         [Fact]
         public void RpnEngine_Exception_Thrown()
         {
-            var rpnEngine = new RpnEngine();
+            var calc = A.Fake<Calculator>();
+            var log = A.Fake<Logger>();
+            var rpnEngine = new RpnEngine(calc, log);
             var input = "2 3 ]";
-            Assert.Throws< ArgumentException >(() => rpnEngine.CalculateRpn(input));
+            Assert.Throws<ArgumentException>(() => rpnEngine.CalculateRpn(input));
         }
 
         [Fact]
-        public void RpnEngine_Exception_Call_To_Log()
+        public void RpnEngine_Exception_Call_To_Log_Fatal()
         {
             var calc = A.Fake<Calculator>();
             var log = A.Fake<Logger>();
@@ -83,14 +86,14 @@ namespace ReversePolishCalculator
         }
 
         [Fact]
-        public void RpnEngine_Result_Call_To_Log()
+        public void RpnEngine_Result_Call_To_Log_Debug()
         {
             var calc = A.Fake<Calculator>();
             var log = A.Fake<Logger>();
             var rpnEngine = new RpnEngine(calc, log);
-            var input = "2 3 +";
+            var input = "0 0 +";
             rpnEngine.CalculateRpn(input);
-            A.CallTo(() => log.Debug("Result of calculation is [5]")).MustHaveHappened();
+            A.CallTo(() => log.Debug("Result of calculation is [0]")).MustHaveHappened();
         }
     }
 }
